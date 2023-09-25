@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Counter</title>
+    <style>
+        p{
+            font-size: 25px;
+            color: blue;
+            margin-left: 30px;
+        }
+        button{
+            font-size: 20px;
+            border-radius: 5px;
+            color: brown;
+            margin: 8px;
+        }
+
+    </style>
+</head>
+<body>
+    <div>
+        <p id="Counter">Counter: <span id="count">0</span></p>
+        <button id="button">Start/Stop</button>
+        <button id="inButton">Increment</button>
+        <button id="deButton">Decrement</button>
+      </div>
+      <script>
+        class Counter {
+          constructor() {
+            this.count = 0;
+            this.interval = null;
+            this.incrementInterval = 1000; 
+            this.Incrementing = false;
+          }
+    
+          startIncrement() {
+            this.interval = setInterval(() => {
+              this.increment();
+              this.updateDisplay();
+            },1000);
+            this.Incrementing = true;
+          }
+    
+          stopIncrement() {
+            clearInterval(this.interval);
+            this.Incrementing = false;
+          }
+    
+          increment() {
+            this.count++;
+            this.updateDisplay();
+          }
+    
+          decrement() {
+            this.count--;
+            this.updateDisplay();
+          }
+    
+          updateDisplay() {
+            document.getElementById('count').textContent = this.count;
+          }
+        }
+    
+        const counter = new Counter();
+    
+        const button = document.getElementById('button');
+        button.addEventListener('click', () => {
+          if (counter.Incrementing) {
+            counter.stopIncrement();
+            button.textContent = 'Start';
+          } else {
+            counter.startIncrement();
+            button.textContent = 'Stop';
+          }
+        });
+    
+        const inButton = document.getElementById('inButton');
+        inButton.addEventListener('click', () => {
+          counter.increment();
+          counter.stopIncrement();
+          button.textContent = 'Start';
+        });
+    
+        const deButton = document.getElementById('deButton');
+        deButton.addEventListener('click', () => {
+          counter.decrement();
+          counter.stopIncrement();
+          button.textContent = 'Start';
+        });
+      </script>
+    </body>
+    </html>
